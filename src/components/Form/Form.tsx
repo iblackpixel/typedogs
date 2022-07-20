@@ -5,6 +5,13 @@ import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { NewBreed } from "../../utils/interfaces";
 //import { getTemperaments } from "../../actions/actions";
+import styled from "styled-components";
+
+const StyledForm = styled.form`
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+`;
 
 export default function Form() {
   const navigate = useNavigate();
@@ -13,31 +20,31 @@ export default function Form() {
     handleSubmit,
     formState: { errors },
   } = useForm<NewBreed>();
+
   const onSubmit: SubmitHandler<NewBreed> = async (data) => {
     const doggo = await Axios.post(
       "https://hidden-fortress-17520.herokuapp.com/dog/",
       data
     );
     alert("Raza creada");
-    navigate("./home", { replace: true });
+    navigate("../home", { replace: true });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Name</label>
-      <input {...register("name")} />
-      <label>Height</label>
-      <input {...register("height")} />
-      <label>Weight</label>
-      <input {...register("weight")} />
-      <label>Life Span</label>
-      <input {...register("lifespan")} />
-      <select multiple {...register("lifespan")}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <input placeholder='Name' {...register("name")} />
+      <input placeholder='Height' {...register("height")} />
+      <input placeholder='Weight' {...register("weight")} />
+      <input placeholder='Life Span' {...register("lifespan")} />
+      <select multiple {...register("temperaments")}>
+        <option disabled value='Elija una o varias opciones'>
+          Elija una o varias opciones
+        </option>
         <option value='Brave'>Brave</option>
         <option value='Horrendus'>Horrendus</option>
         <option value='Magician'>Magician</option>
       </select>
       <input type='submit' />
-    </form>
+    </StyledForm>
   );
 }

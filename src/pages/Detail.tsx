@@ -6,10 +6,42 @@ import Card from "../components/Card/Card";
 import Footer from "../components/NavBar/Footer";
 import NavBar from "../components/NavBar/NavBar";
 import { GetBreed } from "../utils/interfaces";
-
+import styled from "styled-components";
+import { colors } from "../utils/theme";
 interface RootBreed {
   breed: GetBreed;
 }
+
+const ContainerPrincipal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("https://i.ibb.co/7gHY2FH/perros2amplio.jpg");
+`;
+
+const AuxContainer = styled.div`
+  height: 50vh;
+  width: 35vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px;
+  border: 2px solid;
+  border-color: ${colors.secundary};
+`;
+
+const CardContainer = styled.div`
+  height: 90%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: ${colors.primary};
+`;
 
 function Detail() {
   const { id } = useParams();
@@ -21,10 +53,10 @@ function Detail() {
   }, [dispatch, id]);
   const breed = useSelector((state: RootBreed) => state.breed);
   return (
-    <div>
+    <ContainerPrincipal>
       <NavBar />
-      <div>
-        <div>
+      <AuxContainer>
+        <CardContainer>
           <div>
             <Card
               id={breed.id}
@@ -38,10 +70,10 @@ function Detail() {
               }
             />
           </div>
-        </div>
-      </div>
+        </CardContainer>
+      </AuxContainer>
       <Footer />
-    </div>
+    </ContainerPrincipal>
   );
 }
 

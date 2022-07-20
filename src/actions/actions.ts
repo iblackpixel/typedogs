@@ -8,7 +8,7 @@ import {
   GET_TEMPERAMENTS_ERROR,
 } from "../constants/contants";
 import { GetDog, GetTemperament } from "../utils/interfaces";
-
+//TODO verificar validaciones de las actions
 const puertoBack = "https://hidden-fortress-17520.herokuapp.com/";
 
 export const getDogs = () => async (dispatch: (x: GetDog | any) => void) => {

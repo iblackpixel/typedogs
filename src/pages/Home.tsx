@@ -7,6 +7,7 @@ import Paginado from "../components/NavBar/Paginado";
 import { getDogs, getTemperaments } from "../actions/actions";
 import styled from "styled-components";
 import { GetDog, GetTemperament } from "../utils/interfaces";
+import { colors } from "../utils/theme";
 
 interface RootState {
   dogs: GetDog[];
@@ -14,9 +15,62 @@ interface RootState {
 interface RootTemps {
   temperaments: GetTemperament[];
 }
-
-const PrincipalContainer = styled.div``;
-
+const ContainerPrincipal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("https://i.ibb.co/7gHY2FH/perros2amplio.jpg");
+`;
+const FilterTopContainer = styled.div`
+  widht: 80%;
+`;
+const FilterContainer = styled.div`
+  background-color: ${colors.primary};
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+`;
+const DogContainer = styled.div`
+  height: 72vh;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2vh;
+  align-items: center;
+  justify-items: center;
+  border: 2px;
+  padding: 3px;
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+    background-color: ${colors.ulprimary};
+    border: 1px solid ${colors.filledPrimary};
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${colors.secundary};
+    border-radius: 3px;
+  }
+  @media screen and (max-width: 760px) {
+    width: 92vw;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.5vh;
+    overflow-x: auto;
+  }
+  @media screen and (max-width: 560px) {
+    width: 94vw;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.3vh;
+    overflow-x: auto;
+  }
+  @media screen and (max-width: 360px) {
+    width: 94vw;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0.5vh;
+    overflow-x: auto;
+  }
+`;
 export default function Home() {
   const dispatch = useDispatch<any>();
   const allDogs = useSelector((state: RootState) => state.dogs);
@@ -163,9 +217,9 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <ContainerPrincipal>
       <NavBar />
-      <div>
+      <FilterTopContainer>
         <div>
           <div>
             {door === 0 ? (
@@ -236,8 +290,8 @@ export default function Home() {
             </button>
           </div>
         </div>
-      </div>
-      <div>
+      </FilterTopContainer>
+      <DogContainer>
         {door2 === 1
           ? totalDogs
               .slice(indexOfFirstDog, indexOfLastDog)
@@ -294,9 +348,9 @@ export default function Home() {
                   );
                 }
               )}
-      </div>
+      </DogContainer>
       <Paginado totalDogs={totalDogs.length} paginado={paginado} />
       <Footer />
-    </div>
+    </ContainerPrincipal>
   );
 }

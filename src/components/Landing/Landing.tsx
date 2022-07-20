@@ -15,8 +15,8 @@ const ContainerPrincipal = styled.div`
 const Title = styled.h2`
   text-align: center;
   height: auto;
-  width: 50vw;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  width: 60vw;
+  font-family: Impact, Haettenschweiler, Lato, "Arial Narrow Bold", sans-serif;
   font-size: 4em;
   color: ${colors.filledSecundary};
   margin-top: 0;
@@ -24,6 +24,14 @@ const Title = styled.h2`
   margin-right: 10%;
   padding: 3%;
   background-color: ${colors.primary};
+  @media screen and (max-width: 560px) {
+    width: 94vw;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 const ButtonContainer = styled.div`
   height: 30vh;
@@ -43,12 +51,19 @@ const HomeButton = styled.button`
   height: 10vh;
   width: 33vw;
   font-size: 1.8em;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: Impact, Haettenschweiler, Lato, "Arial Narrow Bold", sans-serif;
   color: ${colors.secundary};
   margin-top: 1%;
 
   padding: 3%;
   background-color: ${colors.primary};
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  &:visited {
+    text-decoration: none;
+  }
 `;
 const MarkerContainer = styled.div`
   height: 20vh;
@@ -62,6 +77,14 @@ const MarkerContainer = styled.div`
   color: ${colors.filledPrimary};
   margin-bottom: 0;
   padding: 3%;
+  @media screen and (max-width: 560px) {
+    width: 94vw;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 const Pocket = styled.span`
   font-family: Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
@@ -76,9 +99,9 @@ export default function Landing() {
     <ContainerPrincipal>
       <Title>Henry Dogs</Title>
       <ButtonContainer>
-        <Link to={"/home"}>
+        <StyledLink to={"/home"}>
           <HomeButton>Ingresa!</HomeButton>
-        </Link>
+        </StyledLink>
       </ButtonContainer>
       <MarkerContainer>
         <Pocket>Presentado por:</Pocket>
