@@ -5,7 +5,12 @@ import { getBreed } from "../actions/actions";
 import Card from "../components/Card/Card";
 import Footer from "../components/NavBar/Footer";
 import NavBar from "../components/NavBar/NavBar";
-import style from "./style.module.css";
+import { GetBreed } from "../utils/interfaces";
+
+interface RootBreed {
+  breed: GetBreed;
+}
+
 function Detail() {
   const { id } = useParams();
   const dispatch: (x: any) => void = useDispatch();
@@ -14,13 +19,13 @@ function Detail() {
       dispatch(getBreed(id));
     }
   }, [dispatch, id]);
-  const breed = useSelector((state: any) => state.breed);
+  const breed = useSelector((state: RootBreed) => state.breed);
   return (
-    <div className={style.BGP}>
+    <div>
       <NavBar />
-      <div className={style.auxFormC}>
-        <div className={style.formContainer}>
-          <div className={style.card}>
+      <div>
+        <div>
+          <div>
             <Card
               id={breed.id}
               name={breed.name}

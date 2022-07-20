@@ -1,26 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+//import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { NewBreed } from "../../utils/interfaces";
 //import { getTemperaments } from "../../actions/actions";
 
-type FormData = {
-  name: string;
-  height: string;
-  weight: string;
-  lifespan: string;
-  temperaments: string[];
-};
-
 export default function Form() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  } = useForm<NewBreed>();
+  const onSubmit: SubmitHandler<NewBreed> = async (data) => {
     const doggo = await Axios.post(
       "https://hidden-fortress-17520.herokuapp.com/dog/",
       data

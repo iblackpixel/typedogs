@@ -6,10 +6,12 @@ type ButtonProps = {
   handleclick: () => void;
 };
 
-export default function Paginado(
-  totalDogs: [],
-  paginado: (pageNumbers: number) => void
-) {
+interface PropsPaginado {
+  totalDogs: [];
+  paginado: (pageNumbers: number) => void;
+}
+
+export default function Paginado({ totalDogs, paginado }: PropsPaginado) {
   const [pagina, setPagina] = useState<number>();
   const handlePage = function (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>

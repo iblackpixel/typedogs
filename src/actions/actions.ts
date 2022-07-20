@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import {
   GET_BREED,
@@ -6,10 +7,11 @@ import {
   GET_TEMPERAMENTS,
   GET_TEMPERAMENTS_ERROR,
 } from "../constants/contants";
+import { GetDog, GetTemperament } from "../utils/interfaces";
 
 const puertoBack = "https://hidden-fortress-17520.herokuapp.com/";
 
-export const getDogs = () => async (dispatch: (x: any) => void) => {
+export const getDogs = () => async (dispatch: (x: GetDog | any) => void) => {
   try {
     const json = await axios.get(`${puertoBack}dogs`);
 
@@ -29,7 +31,7 @@ export const getDogs = () => async (dispatch: (x: any) => void) => {
 };
 
 export const getBreed =
-  (id: string | number) => async (dispatch: (x: any) => void) => {
+  (id: string | number) => async (dispatch: (x: GetDog | any) => void) => {
     try {
       const json = await axios.get(
         "https://hidden-fortress-17520.herokuapp.com/dogs/" + id
@@ -43,21 +45,22 @@ export const getBreed =
     }
   };
 
-export const getTemperaments = () => async (dispatch: (x: any) => void) => {
-  try {
-    const json = await axios.get(`${puertoBack}temperament`);
+export const getTemperaments =
+  () => async (dispatch: (x: GetTemperament | any) => void) => {
+    try {
+      const json = await axios.get(`${puertoBack}temperament`);
 
-    dispatch({
-      type: GET_TEMPERAMENTS,
-      payload: json.data,
-    });
-  } catch (error: any) {
-    dispatch({
-      type: GET_TEMPERAMENTS_ERROR,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_TEMPERAMENTS,
+        payload: json.data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: GET_TEMPERAMENTS_ERROR,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

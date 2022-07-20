@@ -1,20 +1,89 @@
 import React from "react";
-import style from "./Landing.module.css";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { colors } from "../../utils/theme";
 
+const ContainerPrincipal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("https://i.ibb.co/7gHY2FH/perros2amplio.jpg");
+`;
+const Title = styled.h2`
+  text-align: center;
+  height: auto;
+  width: 50vw;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 4em;
+  color: ${colors.filledSecundary};
+  margin-top: 0;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 3%;
+  background-color: ${colors.primary};
+`;
+const ButtonContainer = styled.div`
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1%;
+  margin-left: 10%;
+  margin-right: 12%;
+`;
+const HomeButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  width: 33vw;
+  font-size: 1.8em;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  color: ${colors.secundary};
+  margin-top: 1%;
+
+  padding: 3%;
+  background-color: ${colors.primary};
+`;
+const MarkerContainer = styled.div`
+  height: 20vh;
+  width: 50vw;
+  background-color: ${colors.secundary};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 30px;
+  color: ${colors.filledPrimary};
+  margin-bottom: 0;
+  padding: 3%;
+`;
+const Pocket = styled.span`
+  font-family: Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  margin-left: 2%;
+  margin-right: 2%;
+`;
 export default function Landing() {
   return (
-    <div className={style.BGP}>
-      <h2 className={style.title}>Henry Dogs</h2>
-      <div className={style.btnCont}>
+    <ContainerPrincipal>
+      <Title>Henry Dogs</Title>
+      <ButtonContainer>
         <Link to={"/home"}>
-          <button className={style.btnHome}>Ingresa!</button>
+          <HomeButton>Ingresa!</HomeButton>
         </Link>
-      </div>
-      <div className={style.caratula}>
-        <span className={style.pocket}>Presentado por:</span>
-        <span className={style.pocket}>Roque Iván Moyano</span>
-      </div>
-    </div>
+      </ButtonContainer>
+      <MarkerContainer>
+        <Pocket>Presentado por:</Pocket>
+        <Pocket>Roque Iván Moyano</Pocket>
+      </MarkerContainer>
+    </ContainerPrincipal>
   );
 }

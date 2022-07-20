@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import style from "./Card.module.css";
 
 type Card = {
-  id: string;
+  id: string | number;
   name: string;
   image: string;
   height: string;
@@ -14,12 +13,12 @@ type Card = {
 
 export default function Card(props: Card) {
   return (
-    <div className={style.contenedor}>
+    <div>
       <h4>{props.name}</h4>
-      <div className={style.image}>
+      <div>
         <img src={props.image} width='60px' height='60px' alt='' />
       </div>
-      <div className={style.informacion}>
+      <div>
         {props.height ? (
           <h6>Height:{" " + props.height + " cm."}</h6>
         ) : (

@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReducerState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../components/Card/Card";
 import Footer from "../components/NavBar/Footer";
 import NavBar from "../components/NavBar/NavBar";
 import Paginado from "../components/NavBar/Paginado";
 import { getDogs, getTemperaments } from "../actions/actions";
-import style from "./style.module.css";
+import styled from "styled-components";
+import { GetDog, GetTemperament } from "../utils/interfaces";
+
+interface RootState {
+  dogs: GetDog[];
+}
+interface RootTemps {
+  temperaments: GetTemperament[];
+}
+
+const PrincipalContainer = styled.div``;
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const allDogs = useSelector((state) => state.dogs);
-  const allTemperaments = useSelector((state) => state.temperaments);
+  const dispatch = useDispatch<any>();
+  const allDogs = useSelector((state: RootState) => state.dogs);
+  const allTemperaments = useSelector((state: RootTemps) => state.temperaments);
 
   useEffect(() => {
     dispatch(getDogs());
@@ -21,14 +31,16 @@ export default function Home() {
 
   const [door, setDoor] = useState(0);
   const [door2, setDoor2] = useState(1);
-  const [totalDogs, setTotalDogs] = useState([]);
+  const [totalDogs, setTotalDogs] = useState<any>([]);
   const [checked, setChecked] = useState(false);
   const [checked2, setChecked2] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line array-callback-return
-    const filtDogs = [...allDogs].sort(function (a, b) {
+    const filtDogs = [...allDogs].sort(function (a, b): number {
       if (b.name > a.name) return -1;
+      if (b.name < a.name) return 1;
+      return 0;
     });
     setTotalDogs(filtDogs);
   }, [setTotalDogs, allDogs]);
@@ -37,13 +49,13 @@ export default function Home() {
   const indexOfLastDog = currentPage * 8;
   const indexOfFirstDog = indexOfLastDog - 8;
 
-  const paginado = (pageNumbers) => {
+  const paginado = (pageNumbers: number) => {
     setCurrentPage(pageNumbers);
   };
 
-  const handleSelect = function (e) {
+  const handleSelect = function (e: { target: { value: string } }) {
     // eslint-disable-next-line array-callback-return
-    let filteredTemp = allDogs.filter((d) => {
+    const filteredTemp = allDogs.filter((d) => {
       if (d.temperament) {
         if (d.temperament.includes(e.target.value)) return d;
       }
@@ -63,6 +75,8 @@ export default function Home() {
       // eslint-disable-next-line array-callback-return
       const filtDogs = [...totalDogs].sort(function (a, b) {
         if (b.name > a.name) return -1;
+        if (b.name < a.name) return 1;
+        return 0;
       });
       setTotalDogs(filtDogs);
       setDoor(0);
@@ -72,7 +86,7 @@ export default function Home() {
   const handleChecked = function () {
     if (checked === false) {
       if (checked2 === false) {
-        let filteredBreeds = allDogs.filter(
+        const filteredBreeds = allDogs.filter(
           (p) => p.id.toString().includes("b") === false
         );
         setTotalDogs(filteredBreeds);
@@ -93,7 +107,7 @@ export default function Home() {
           handleWeightSort();
         }
       } else {
-        let filteredBreeds = allDogs.filter(
+        const filteredBreeds = allDogs.filter(
           (p) => p.id.toString().includes("b") === true
         );
         setTotalDogs(filteredBreeds);
@@ -108,7 +122,7 @@ export default function Home() {
   const handleChecked2 = function () {
     if (checked2 === false) {
       if (checked === false) {
-        let filteredBreeds = allDogs.filter(
+        const filteredBreeds = allDogs.filter(
           (p) => p.id.toString().includes("b") === true
         );
         setTotalDogs(filteredBreeds);
@@ -126,7 +140,7 @@ export default function Home() {
       if (checked === false) {
         setTotalDogs(allDogs);
       } else {
-        let filteredBreeds = allDogs.filter(
+        const filteredBreeds = allDogs.filter(
           (p) => p.id.toString().includes("b") === false
         );
         setTotalDogs(filteredBreeds);
@@ -137,7 +151,7 @@ export default function Home() {
       return setChecked2(false);
     }
   };
-  const onSearch = function (breed) {
+  const onSearch = function (breed: string) {
     if (breed.length) {
       const searchedBreeds = [...allDogs].filter((e) =>
         e.name.toLowerCase().includes(breed.toLowerCase())
@@ -149,10 +163,10 @@ export default function Home() {
   };
 
   return (
-    <div className={style.BGP}>
-      <NavBar onSearch={onSearch} />
-      <div className={style.filters2}>
-        <div className={style.filters}>
+    <div>
+      <NavBar />
+      <div>
+        <div>
           <div>
             {door === 0 ? (
               <button onClick={() => handleWeightSort()}>Peso</button>
@@ -223,20 +237,32 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className={style.dogcontainer}>
+      <div>
         {door2 === 1
-          ? totalDogs.slice(indexOfFirstDog, indexOfLastDog).map((e) => {
-              return (
-                <Card
-                  key={e.id}
-                  id={e.id}
-                  name={e.name}
-                  weight={e.weight}
-                  image={e.image}
-                  temperaments={e.temperament}
-                />
-              );
-            })
+          ? totalDogs
+              .slice(indexOfFirstDog, indexOfLastDog)
+              .map(
+                (e: {
+                  id: string;
+                  name: string;
+                  weight: string;
+                  image: string;
+                  temperament: string | undefined;
+                }) => {
+                  return (
+                    <Card
+                      key={e.id}
+                      id={e.id}
+                      name={e.name}
+                      weight={e.weight}
+                      image={e.image}
+                      temperaments={e.temperament}
+                      height={""}
+                      lifeSpan={""}
+                    />
+                  );
+                }
+              )
           : totalDogs
               .slice(
                 totalDogs.length -
@@ -246,18 +272,28 @@ export default function Home() {
                 totalDogs.length - indexOfFirstDog
               )
               .reverse()
-              .map((e) => {
-                return (
-                  <Card
-                    key={e.id}
-                    id={e.id}
-                    name={e.name}
-                    weight={e.weight}
-                    image={e.image}
-                    temperaments={e.temperament}
-                  />
-                );
-              })}
+              .map(
+                (e: {
+                  id: string;
+                  name: string;
+                  weight: string;
+                  image: string;
+                  temperament: string | undefined;
+                }) => {
+                  return (
+                    <Card
+                      key={e.id}
+                      id={e.id}
+                      name={e.name}
+                      weight={e.weight}
+                      image={e.image}
+                      temperaments={e.temperament}
+                      height={""}
+                      lifeSpan={""}
+                    />
+                  );
+                }
+              )}
       </div>
       <Paginado totalDogs={totalDogs.length} paginado={paginado} />
       <Footer />
